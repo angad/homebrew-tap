@@ -1,0 +1,41 @@
+name: Validate casks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mica:
+    runs-on: macos-latest
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_NO_ANALYTICS: 1
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
+      HOMEBREW_NO_INSTALL_UPGRADE: 1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax and style
+        run: |
+          ruby -c Casks/mica.rb
+          brew style Casks/mica.rb
+      - name: Install from the checked-out tap
+        run: |
+          brew tap angad/tap "$GITHUB_WORKSPACE"
+          mkdir -p "$RUNNER_TEMP/MicaApplications"
+          brew install --cask --appdir="$RUNNER_TEMP/MicaApplications" angad/tap/mica
+      - name: Audit cask and verify app
+        run: |
+          brew audit --cask --online angad/tap/mica
+          app="$RUNNER_TEMP/MicaApplications/Mica.app"
+          codesign --verify --all-architectures --deep --strict "$app"
+          lipo -archs "$app/Contents/MacOS/Mica"
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist"
+          xattr -p com.apple.quarantine "$app"
+      - name: Uninstall temporary app
+        if: always()
+        run: |
+          if brew list --cask mica >/dev/null 2>&1; then
+            brew uninstall --cask angad/tap/mica
+          fi
