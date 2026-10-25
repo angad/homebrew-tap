@@ -1,10 +1,10 @@
 cask "mica" do
-  version "1.2.0"
-  sha256 "7634e1d52cc836080a1c9bc5eaa82eb5407333c7c42cc000484990c3f2a68ab3"
+  version "1.3.0"
+  sha256 "720d108c31954e9ccc610721dd6e883a83b68c6f3c06db21074fc9c8b5a56a01"
 
   url "https://github.com/angad/Mica/releases/download/v#{version}/Mica-#{version}-universal.zip"
   name "Mica"
-  desc "Menu bar system monitor, battery health insights, and stay-awake controls"
+  desc "Menu bar system monitor, battery diagnostics, and sleep controls"
   homepage "https://github.com/angad/Mica"
 
   depends_on macos: :monterey

@@ -1,7 +1,7 @@
 # Angad's Homebrew tap
 
 Install [Mica](https://github.com/angad/Mica), a native macOS menu bar monitor with
-battery health insights and stay-awake controls:
+battery diagnostics and sleep controls:
 
 ```sh
 brew install --cask angad/tap/mica
