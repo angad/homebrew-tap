@@ -33,4 +33,6 @@ For a newly signed/notarized release, remove the preview-signing caveat only aft
 Apple acceptance and Gatekeeper verification. Do not remove quarantine in a cask.
 
 Validate changes with `brew style angad/tap/mica`,
-`brew audit --cask angad/tap/mica` and `brew fetch --cask angad/tap/mica`.
+`brew audit --cask --online --except=github_prerelease_version angad/tap/mica`
+and `brew fetch --cask angad/tap/mica`. The one audit exception documents that
+this personal tap intentionally distributes Mica's marked public preview.

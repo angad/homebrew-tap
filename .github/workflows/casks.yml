@@ -27,7 +27,8 @@ jobs:
           brew install --cask --appdir="$RUNNER_TEMP/MicaApplications" angad/tap/mica
       - name: Audit cask and verify app
         run: |
-          brew audit --cask --online angad/tap/mica
+          # This personal tap intentionally distributes Mica's public preview.
+          brew audit --cask --online --except=github_prerelease_version angad/tap/mica
           app="$RUNNER_TEMP/MicaApplications/Mica.app"
           codesign --verify --all-architectures --deep --strict "$app"
           lipo -archs "$app/Contents/MacOS/Mica"
