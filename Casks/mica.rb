@@ -7,7 +7,7 @@ cask "mica" do
   desc "Menu bar system monitor, battery health insights, and stay-awake controls"
   homepage "https://github.com/angad/Mica"
 
-  depends_on macos: ">= 12.3"
+  depends_on macos: :monterey
 
   app "Mica.app"
 
@@ -21,6 +21,7 @@ cask "mica" do
   ]
 
   caveats <<~EOS
+    Mica requires macOS 12.3 or newer.
     This preview is ad-hoc signed and is not notarized by Apple.
     macOS may block the first launch. Review the first-open instructions:
       https://github.com/angad/Mica#install
